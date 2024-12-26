@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.author        = 'Gabriel Plaza'
 
   spec.summary       = 'Fastlane plugin to better manage CI module updates'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-mobcicd"
+  spec.homepage      = "https://github.com/gabrielplaza86/fastlane-plugin-mobcicd"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
