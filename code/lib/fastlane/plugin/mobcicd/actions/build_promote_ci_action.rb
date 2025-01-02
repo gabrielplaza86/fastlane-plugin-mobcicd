@@ -31,7 +31,7 @@ module Fastlane
           options[:skip_archive] = options[:export_method].eql?("development")
           options[:workspace] = parameters["workspace"] if parameters["workspace"]
           options[:project] = parameters["project"] if parameters["project"]
-          options[:output_directory] = options[:output_directory] || "build/outputs"
+          options[:output_directory] = params[:output_directory] || "build/outputs"
           options[:sdk] = parameters["sdk"] if parameters["sdk"]
           options[:output_name] = parameters["output_name"] || output_name
           options[:derived_data_path] = parameters["derived_data_path"] || ENV["MOBILE_DERIVED_DATA_PATH"].to_s
@@ -54,16 +54,16 @@ module Fastlane
             archive_path = Actions.lane_context[SharedValues::XCODEBUILD_ARCHIVE]
             app_directory = Dir.glob("#{archive_path.to_s}/**/*.app").reject { |item| File.symlink?(item) }.first.to_s
             unless app_directory.empty?
-              zip_app_folder app_directory: app_directory, output_directory: options[:output_directory], basename: output_name
+              zip_app_folder app_directory: app_directory, output_directory: params[:output_directory], basename: output_name
               app_path = Actions.lane_context[:APP_OUTPUT_PATH].to_s
             end
           end
-
+          project_dir = params[:project_dir]
           build_properties = {}
-          build_properties["path"] = path.to_s.gsub("#{options[:project_dir]}/","")
-          build_properties["app_path"] = app_path.to_s.gsub("#{options[:project_dir]}/","")
-          build_properties["dsym_path"] = Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH].to_s.gsub("#{options[:project_dir]}/","")
-          build_properties["archive_path"] = Actions.lane_context[SharedValues::XCODEBUILD_ARCHIVE].to_s.gsub("#{options[:project_dir]}/","")
+          build_properties["path"] = path.to_s.gsub("#{project_dir}/","")
+          build_properties["app_path"] = app_path.to_s.gsub("#{project_dir}/","")
+          build_properties["dsym_path"] = Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH].to_s.gsub("#{project_dir}/","")
+          build_properties["archive_path"] = Actions.lane_context[SharedValues::XCODEBUILD_ARCHIVE].to_s.gsub("#{project_dir}/","")
           build_json_properties["#{configuration}"] = build_properties
         end
         Helper::MobcicdHelper.export_github_vars :github_export => "GITHUB_OUTPUT", :vars => { "build_configurations": build_configurations.map { |bc| bc["name"] }, "build_config_properties": build_json_properties }, :dump => true
@@ -72,6 +72,26 @@ module Fastlane
 
       def self.description
         "Build the iOS app for distribution and export it to the App Store"
+      end
+
+      def self.available_options
+        [
+          FastlaneCore::ConfigItem.new(key: :build_configurations,
+                                        env_name: "MOBILE_BUILD_CONFIGURATIONS",
+                                        description: "The build configurations",
+                                        optional: false,
+                                        type: Array),
+          FastlaneCore::ConfigItem.new(key: :output_directory,
+                                       env_name: "MOBILE_OUTPUT_DIRECTORY",
+                                       description: "The output directory",
+                                       optional: false,
+                                       type: String),
+          FastlaneCore::ConfigItem.new(key: :project_dir,
+                                        env_name: "MOBILE_PROJECT_DIR",
+                                        description: "The project directory",
+                                        optional: false,
+                                        type: String)
+        ]
       end
 
       def self.authors
