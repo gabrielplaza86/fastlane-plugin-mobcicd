@@ -129,6 +129,19 @@ module Fastlane
         end if File.file?(filename)
       end
 
+      def self.zip_app_folder(options)
+        basename = options[:basename] || File.basename(options[:app_directory],".*")
+        extension = File.extname(options[:app_directory])
+        app_zip_path = "#{options[:output_directory]}/#{basename}#{extension}.zip"
+        UI.message "Zipping app folder: #{options[:app_directory]} to #{app_zip_path}"
+        other_action.zip(
+          path: options[:app_directory],
+          output_path: app_zip_path,
+          verbose: false
+        )
+        app_zip_path
+      end
+
       def self.retrive_source_packages_path(options)
         source_packages_path = ENV["MOBILE_SOURCE_PACKAGES_PATH"] || "#{ENV["MOBILE_DERIVED_DATA_PATH"]}/#{File.basename(options[:workspace], ".*")}"
         export_github_vars :github_export => "GITHUB_ENV", :vars => { "MOBILE_SOURCE_PACKAGES_PATH": source_packages_path }, :dump => false

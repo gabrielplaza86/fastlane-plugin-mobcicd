@@ -53,10 +53,7 @@ module Fastlane
             other_action.gym(options)
             archive_path = Actions.lane_context[SharedValues::XCODEBUILD_ARCHIVE]
             app_directory = Dir.glob("#{archive_path.to_s}/**/*.app").reject { |item| File.symlink?(item) }.first.to_s
-            unless app_directory.empty?
-              zip_app_folder app_directory: app_directory, output_directory: params[:output_directory], basename: output_name
-              app_path = Actions.lane_context[:APP_OUTPUT_PATH].to_s
-            end
+            app_path = zip_app_folder(app_directory: app_directory, output_directory: params[:output_directory], basename: output_name) unless app_directory.empty?
           end
           project_dir = params[:project_dir]
           build_properties = {}
