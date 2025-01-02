@@ -1,0 +1,18 @@
+lane :test do
+  mobcicd
+end
+
+lane :release do
+  version_path = '../lib/fastlane/plugin/mobcicd/version.rb'
+  release_version = File.read(version_path).scan(/\d+/).join('.')
+  sh('rake build')
+  set_github_release(
+    repository_name: 'gabrielplaza86/fastlane-plugin-mobcicd',
+    api_token: ENV['GITHUB_TOKEN'],
+    name: "Mobcicd v#{release_version}",
+    tag_name: "v#{release_version}",
+    description: "v#{release_version}",
+    commitish: git_branch,
+    upload_assets: ["pkg/fastlane-plugin-mobcicd-#{release_version}.gem"]
+  )
+end
