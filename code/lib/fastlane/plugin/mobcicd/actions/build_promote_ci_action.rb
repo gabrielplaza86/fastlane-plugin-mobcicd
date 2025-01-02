@@ -44,7 +44,7 @@ module Fastlane
             provisioningProfiles: provisioning_profiles[configuration]
           }
 
-          gym(options)
+          other_action.gym(options)
           path = Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]
 
           if parameters.has_key?("generate_app") && parameters["generate_app"]
