@@ -53,7 +53,7 @@ module Fastlane
             other_action.gym(options)
             archive_path = Actions.lane_context[SharedValues::XCODEBUILD_ARCHIVE]
             app_directory = Dir.glob("#{archive_path.to_s}/**/*.app").reject { |item| File.symlink?(item) }.first.to_s
-            app_path = Helper::MobcicdHelper.zip_app_folder(app_directory: app_directory, output_directory: params[:output_directory], basename: output_name) unless app_directory.empty?
+            app_path = zip_app_folder(app_directory: app_directory, output_directory: params[:output_directory], basename: output_name) unless app_directory.empty?
           end
           project_dir = params[:project_dir]
           build_properties = {}
@@ -65,6 +65,19 @@ module Fastlane
         end
         Helper::MobcicdHelper.export_github_vars :github_export => "GITHUB_OUTPUT", :vars => { "build_configurations": build_configurations.map { |bc| bc["name"] }, "build_config_properties": build_json_properties }, :dump => true
         Helper::MobcicdHelper.export_github_vars :github_export => "GITHUB_ENV", :vars => { "MOBILE_OUTPUT_STEP": "build", "MOBILE_OUTPUT_VALUE": "build_config_properties" }, :dump => false
+      end
+
+      def self.zip_app_folder(options)
+        basename = options[:basename] || File.basename(options[:app_directory],".*")
+        extension = File.extname(options[:app_directory])
+        app_zip_path = "#{options[:output_directory]}/#{basename}#{extension}.zip"
+        UI.message "Zipping app folder: #{options[:app_directory]} to #{app_zip_path}"
+        other_action.zip(
+          path: options[:app_directory],
+          output_path: app_zip_path,
+          verbose: false
+        )
+        app_zip_path
       end
 
       def self.description
