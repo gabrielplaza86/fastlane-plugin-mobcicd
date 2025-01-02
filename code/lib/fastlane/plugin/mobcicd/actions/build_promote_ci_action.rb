@@ -71,7 +71,7 @@ module Fastlane
       end
 
       def self.description
-        "Resign the ipa file"
+        "Build the iOS app for distribution and export it to the App Store"
       end
 
       def self.authors
@@ -80,7 +80,7 @@ module Fastlane
 
       def self.details
         [
-        "Resign the ipa file"
+        "Build the iOS app for distribution and export it to the App Store"
         ].join("\n")
       end
 

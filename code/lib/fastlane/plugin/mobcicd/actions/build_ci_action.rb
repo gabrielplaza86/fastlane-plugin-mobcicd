@@ -61,7 +61,7 @@ module Fastlane
       end
 
       def self.description
-        "Resign the ipa file"
+        "Build the project"
       end
 
       def self.authors
@@ -70,7 +70,7 @@ module Fastlane
 
       def self.details
         [
-        "Resign the ipa file"
+        "Build the project"
         ].join("\n")
       end
 
