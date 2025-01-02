@@ -33,6 +33,7 @@ module Fastlane
         other_action.gym(options)
         UI.success("Build passed...")
         Helper::MobcicdHelper.export_github_vars :github_export => "GITHUB_ENV", :vars => { "MOBILE_CRASH_FILE": Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH].to_s }, :dump => false
+        generate_extra_paths
       end
 
       def self.config_provisioning_profiles
@@ -47,6 +48,18 @@ module Fastlane
           return JSON.dump(provision_profile)
         end
       end
+
+      def self.generate_extra_paths
+        full_build_path = Helper::MobcicdHelper.get_param[:MOBILE_FULL_OUTPUT_PATH]
+        begin
+          other_action.version_ci
+        rescue Exception => e
+          UI.error "Version not found: #{e}"
+        end
+        Helper::MobcicdHelper.export_github_vars :github_export => "GITHUB_ENV", :vars => { "MOBILE_FULL_BUILD_PATH": full_build_path }, :dump => false
+        Helper::MobcicdHelper.export_github_vars :github_export => "GITHUB_ENV", :vars => { "MOBILE_DISTRIBUTE_ON": Helper::MobcicdHelper.get_param[:MOBILE_DISTRIBUTE_ON] }, :dump => true
+      end
+
       def self.description
         "Resign the ipa file"
       end
