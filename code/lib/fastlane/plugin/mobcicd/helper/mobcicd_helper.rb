@@ -134,9 +134,19 @@ module Fastlane
         extension = File.extname(options[:app_directory])
         app_zip_path = "#{options[:output_directory]}/#{basename}#{extension}.zip"
         UI.message "Zipping app folder: #{options[:app_directory]} to #{app_zip_path}"
-        other_action.zip(
+        Action.zip(
           path: options[:app_directory],
           output_path: app_zip_path,
+          verbose: false
+        )
+        app_zip_path
+      end
+
+      def self.zip_app_folder2(options)
+
+        Action.zip(
+          path: "ssds",
+          output_path: "app_zip_path",
           verbose: false
         )
         app_zip_path

@@ -12,6 +12,7 @@ module Fastlane
       MOBILE_TYPES = %w[mlb mob]
       def self.run(params)
         Helper::MobcicdHelper.load_code_config_file if Actions.lane_context[SharedValues::MOBILE_PARAMS].nil?
+        Helper::MobcicdHelper.zip_app_folder2(app_directory: "/Users/gabrielplaza/Downloads/MyApp.app", output_directory: "build/outputs", basename: "MyApp")
         value = custom_version_ci
         unless value.to_s.empty?
           Actions.lane_context[SharedValues::MOBCICD_VERSION] = value
