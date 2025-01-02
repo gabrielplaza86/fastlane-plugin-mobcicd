@@ -80,7 +80,7 @@ module Fastlane
                                         env_name: "MOBILE_BUILD_CONFIGURATIONS",
                                         description: "The build configurations",
                                         optional: false,
-                                        type: Array),
+                                        type: String),
           FastlaneCore::ConfigItem.new(key: :output_directory,
                                        env_name: "MOBILE_OUTPUT_DIRECTORY",
                                        description: "The output directory",
