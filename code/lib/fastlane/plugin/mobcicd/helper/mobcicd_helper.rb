@@ -33,6 +33,7 @@ module Fastlane
         Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_CONFIGURATION] = configuration
         Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_WORKSPACE] = parameters["workspace"]
         Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_PROJECT] = parameters["project"]
+        Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_PROJECT_KEY] = parameters["project_key"]
         Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_SCHEME] = parameters["scheme"]
         Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_TARGET] = parameters["target"] if parameters.has_key?("target")
         Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_EXPORT_METHOD] = parameters["export_method"] || "enterprise"

@@ -6,7 +6,7 @@ module Fastlane
     module SharedValues
     end
 
-    class ExecutesE2eTpCiAction < Action
+    class ExecutesE2eCiAction < Action
 
       def self.run(params)
         Helper::MobcicdHelper.load_code_config_file if Actions.lane_context[SharedValues::MOBILE_PARAMS].nil?
@@ -22,7 +22,7 @@ module Fastlane
       end
 
       def self.description
-        "Executes E2E tests with Traffic Parrot"
+        "Executes E2E tests"
       end
 
       def self.authors
@@ -31,7 +31,7 @@ module Fastlane
 
       def self.details
         [
-        "Executes E2E tests with Traffic Parrot"
+        "Executes E2E tests"
         ].join("\n")
       end
 

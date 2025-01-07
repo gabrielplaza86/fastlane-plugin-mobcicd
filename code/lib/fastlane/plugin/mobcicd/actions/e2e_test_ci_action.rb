@@ -48,6 +48,47 @@ module Fastlane
       def self.is_supported?(platform)
          [:ios].include?(platform)
       end
+
+      def self.available_options
+        [
+          FastlaneCore::ConfigItem.new(key: :workspace,
+                                        env_name: "MOBILE_WORKSPACE",
+                                        description: "Project's Workspace",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :scheme,
+                                       env_name: "MOBILE_SCHEME",
+                                       description: "Project's Scheme",
+                                       optional: false,
+                                       type: String),
+          FastlaneCore::ConfigItem.new(key: :testplan,
+                                        env_name: "MOBILE_TESTPLAN",
+                                        description: "Project's Testplan",
+                                        optional: true,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :configuration,
+                                        env_name: "MOBILE_CONFIGURATION",
+                                        description: "Project's Configuration",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :device,
+                                        env_name: "MOBILE_DEVICE",
+                                        description: "Device to run the tests",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :output_directory,
+                                        env_name: "MOBILE_OUTPUT_DIRECTORY",
+                                        description: "Output directory",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :derived_data_path,
+                                        env_name: "MOBILE_DERIVED_DATA_PATH",
+                                        description: "Derived data path",
+                                        optional: true,
+                                        type: String)
+        ]
+      end
+
     end
   end
 end

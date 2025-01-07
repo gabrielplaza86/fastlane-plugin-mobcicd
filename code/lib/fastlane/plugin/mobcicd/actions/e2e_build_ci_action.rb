@@ -22,7 +22,7 @@ module Fastlane
           destination: destination,
           xcargs: "IPHONEOS_DEPLOYMENT_TARGET='#{params[:device_os_version]}' CODE_SIGNING_ALLOWED='NO' SYMROOT='#{export_path_arranged}'"
         }
-        UI.message("Building app for E2E... with scheme: #{scheme}")
+        UI.message("Building app for E2E... with scheme: #{params[:scheme]}")
         other_action.xcodebuild(options)
         UI.success("App compiled...")
       end
@@ -44,6 +44,57 @@ module Fastlane
       def self.is_supported?(platform)
          [:ios].include?(platform)
       end
+
+      def self.available_options
+        [
+          FastlaneCore::ConfigItem.new(key: :workspace,
+                                        env_name: "MOBILE_WORKSPACE",
+                                        description: "Project's Workspace",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :scheme,
+                                       env_name: "MOBILE_SCHEME",
+                                       description: "Project's Scheme",
+                                       optional: false,
+                                       type: String),
+          FastlaneCore::ConfigItem.new(key: :simulator,
+                                        env_name: "MOBILE_SIMULATOR",
+                                        description: "Simulator to run the tests",
+                                        optional: true,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :configuration,
+                                        env_name: "MOBILE_CONFIGURATION",
+                                        description: "Project's Configuration",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :device,
+                                        env_name: "MOBILE_DEVICE",
+                                        description: "Device to run the tests",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :device_os_version,
+                                        env_name: "MOBILE_DEVICE_OS_VERSION",
+                                        description: "Device OS version",
+                                        optional: false,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :derived_data_path,
+                                        env_name: "MOBILE_DERIVED_DATA_PATH",
+                                        description: "Derived data path",
+                                        optional: true,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :archive_path,
+                                        env_name: "MOBILE_ARCHIVE_PATH",
+                                        description: "Archive path",
+                                        optional: true,
+                                        type: String),
+          FastlaneCore::ConfigItem.new(key: :export_path,
+                                        env_name: "MOBILE_EXPORT_PATH",
+                                        description: "Export path",
+                                        optional: true,
+                                        type: String)
+        ]
+      end
+
     end
   end
 end
