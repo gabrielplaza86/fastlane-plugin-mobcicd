@@ -18,7 +18,7 @@ module Fastlane
         options[:derived_data_path] = Helper::MobcicdHelper.get_param[:MOBILE_DERIVED_DATA_PATH]
         options[:configuration] = Helper::MobcicdHelper.get_param[:MOBILE_E2E_TP_BUILD_CONFIG]
         options[:device] = Helper::MobcicdHelper.get_param[:MOBILE_E2E_TP_DEVICE]
-        other_action.e2e_test_ci_action(options)
+        other_action.e2e_test_ci(options)
       end
 
       def self.description
