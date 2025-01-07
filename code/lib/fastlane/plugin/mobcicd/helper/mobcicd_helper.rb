@@ -1,5 +1,6 @@
 require 'fastlane_core/ui/ui'
 
+
 module Fastlane
   UI = FastlaneCore::UI unless Fastlane.const_defined?(:UI)
 
@@ -52,47 +53,16 @@ module Fastlane
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_TEST_DEVICE] = parameters["test"]["device"]
         end
 
-        if configuration.eql? "Debug"
+        if configuration.include? "Debug"
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_TEST_SCHEME] = parameters["scheme"]
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_TEST_PLAN] = parameters["testplan"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_DERIVED_DATA_PATH] = parameters["derived_data_path"]
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_EXPORT_PATH] = parameters["export_path"]
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_ARCHIVE_PATH] = parameters["archive_file_path"]
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_CONFIGURATION] = parameters["configuration"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_UT_OUTPUT_PATH] = parameters["output_directory"] || Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_OUTPUT_DIRECTORY]
+          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_OUTPUT_PATH] = parameters["output_directory"] || Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_OUTPUT_DIRECTORY]
           Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_DEVICE] = parameters["device"]
-        end
-
-        if configuration.eql? "Debug_E2E"
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_UT_OUTPUT_PATH] = parameters["output_directory"] || Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_OUTPUT_DIRECTORY]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TEST_SCHEME] = parameters["scheme"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_BUILD_CONFIG] = parameters["configuration"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_SIMULATOR] = parameters["iphone_simulator"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_DEVICE] = parameters["device"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_DEVICE_OS_VERSION] = parameters["device_os_version"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_EXPORT_PATH] = parameters["export_path"]
-        end
-
-        if configuration.eql? "Debug_E2E_tp"
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_SCHEME] = parameters["scheme"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_BUILD_CONFIG] = parameters["configuration"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_TESTPLAN] = parameters["testplan"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_DEVICE] = parameters["device"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_OUTPUT_PATH] = parameters["output_directory"] || Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_OUTPUT_DIRECTORY]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_APIUM_DEVICE] = parameters["device_os_version"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_TP_SIMULATOR_SDK] = parameters["iphone_simulator"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_EXPORT_PATH] = parameters["export_path"]
-        end
-
-        if configuration.eql? "Debug_E2E_XCUI"
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_SCHEME] = parameters["scheme"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_BUILD_CONFIG] = parameters["configuration"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_TESTPLAN] = parameters["testplan"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_DEVICE] = parameters["device"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_OUTPUT_PATH] = parameters["output_directory"] || Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_OUTPUT_DIRECTORY]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_APIUM_DEVICE] = parameters["device_os_version"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_E2E_XC_SIMULATOR_SDK] = parameters["iphone_simulator"]
-          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_EXPORT_PATH] = parameters["export_path"]
+          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_DEVICE_OS_VERSION] = parameters["device_os_version"]
+          Actions.lane_context[Actions::SharedValues::MOBILE_PARAMS][:MOBILE_SIMULATOR] = parameters["iphone_simulator"]
         end
 
         if parameters.has_key?("lint") && parameters["lint"]
@@ -137,4 +107,5 @@ module Fastlane
 
     end
   end
+
 end
